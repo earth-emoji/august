@@ -1,0 +1,32 @@
+{% extends 'dashboard.html' %}
+
+{% block content %}
+<div class="ui padded grid">
+    <div class="row">
+        <a class="fluid ui teal button" href="{% url 'jobs:create' %}">Create</a>
+    </div>
+
+    <div class="row">
+        <table class="ui table striped">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Positions to fill</th>
+                    <th>Applicants</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for job in jobs %}
+                    <tr>
+                        <td>{{ job.name }}</td>
+                        <td>{{ job.positions_to_fill }}</td>
+                        <td>{{ job.applicants.count }}</td>
+                        <td><a href="{% url 'jobs:employer-view' job.slug %}">View</a> | Delete</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock content %}

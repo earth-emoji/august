@@ -1,0 +1,24 @@
+<div class="ui longer modal">
+  <div class="header">Quick Apply</div>
+  <div class="scrolling content">
+    <form id="app-form" class="ui large container form" method="POST" action="{{ job.apply_url }}">
+        {% csrf_token %}
+        <div class="field">
+            <label for="interest">Interest:</label>
+            <textarea id="interest" name="interest"></textarea>
+        </div>
+        <div class="ui divider"></div>
+        <h3 class="ui header">Qualifications</h3>
+        {% for skill in job.skills %}
+        <div class="field">
+            <div class="ui checkbox">
+                <input type="checkbox" name="qualifications" value="{{ skill }}" tabindex="0" class="hidden">
+                <label>{{skill}}</label>
+            </div>
+        </div>
+        {% endfor %}
+        <div class="ui divider"></div>
+        <button class="ui teal button" type="submit">Submit</button>
+    </form>
+  </div>
+</div>

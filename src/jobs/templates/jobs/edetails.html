@@ -1,0 +1,84 @@
+{% extends 'dashboard.html' %}
+
+{% block content %}
+    <div class="ui container">
+        <div class="ui padded grid">
+            <div class="row">
+                <div class="sixteen wide column">
+                    <h2 class="ui header">
+                        {{ job.name }}
+                    </h2>
+                    <p>{{ job.description }}</p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="sixteen wide column">
+                    <h3 class="ui header">
+                        Requiments
+                    </h3>
+                    <div class="ui list">
+                        {% for skill in job.skills %}
+                            <div class="item">{{ skill }}</div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="sixteen wide column">
+                    <h3 class="ui header">
+                        Applicants
+                    </h3>
+                    <table class="ui table striped">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Match</th>
+                                <th>Status</th>
+                                <th>Date Applied</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for app in applicants %}
+                                <tr>
+                                    <td>{{ app.applicant.user.name }}</td>
+                                    <td>{{ app.match }}
+                                    <td>{{ app.status }}</td>
+                                    <td>{{ app.date_applied }}</td>
+                                    <td>
+                                        <button type="button" id="{{ app.slug }}" class="app-view ui primary button">
+                                            View
+                                        </button>
+                                        <button type="button" id="" class="ui primary button">
+                                            Message
+                                        </button>
+                                    </td>
+                                </tr>
+                                {% include 'applications/_applicant_modal.html' with professional=app.applicant %}
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+
+{% block javascript %}
+<script>
+$(document).ready(function() {
+    $('.ui.accordion').accordion();
+    var applicants = document.querySelectorAll(".app-view");
+
+    applicants.forEach(function(app) {
+        app.addEventListener("click", function(event) {
+            event.preventDefault();
+            var modal = document.getElementById(`am_${ this.id }`);
+            $(modal).modal('show');
+        });
+    });
+});
+</script>
+{% endblock javascript %}

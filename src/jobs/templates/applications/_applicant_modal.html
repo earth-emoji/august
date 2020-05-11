@@ -1,0 +1,103 @@
+
+<div id="am_{{ app.slug }}" class="ui longer modal">
+    <div class="header">Applicant Details</div>
+    <div class="scrolling content">
+        <div class="ui items">
+            <div class="item">
+                <div class="image">
+                    <img src="{{ MEDIA_URL }}{{ professional.user.photo }}">
+                </div>
+                <div class="content">
+                    <a class="header">{{ professional.user.name }}</a>
+                    <div class="meta">
+                        <span>Description</span>
+                    </div>
+                    <div class="description">
+                        <p>
+                            Morbi feugiat mauris eu mauris finibus fringilla. Maecenas id enim tortor. Sed viverra rutrum sem eget laoreet. Vivamus in pellentesque quam. Mauris metus nibh, lacinia pulvinar ante sit amet, aliquam hendrerit erat. Ut et condimentum leo. In imperdiet ex nec blandit gravida.
+                        </p>
+                    </div>
+                    <div class="extra">
+                        Additional Details
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="ui divider"></div>
+        <div class="row">
+            <div class="sixteen wide column">
+                <div class="ui styled fluid accordion">
+                    <div class="active title">
+                        <i class="dropdown icon"></i>
+                        Work History
+                    </div>
+                    <div class="active content">
+                        <div class="ui items">
+                            {% for work in professional.work_history.all %}
+                                <div class="item">
+                                    <div class="content">
+                                        <h4>{{ work.employer_name }}</h4>
+                                        <div class="description">
+                                            <p></p>
+                                            <p></p>
+                                        </div>
+                                        <div class="extra">
+                                            <i class="green check icon"></i>
+                                            121 Votes
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="title">
+                        <i class="dropdown icon"></i>
+                        Education History
+                    </div>
+                    <div class="content">
+                        <div class="ui items">
+                            {% for edu in professional.education_history.all %}
+                                <div class="item">
+                                    <div class="content">
+                                        <h4>{{ edu.school_name }}</h4>
+                                        <div class="description">
+                                            <p></p>
+                                            <p></p>
+                                        </div>
+                                        <div class="extra">
+                                            <i class="green check icon"></i>
+                                            121 Votes
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="title">
+                        <i class="dropdown icon"></i>
+                        References
+                    </div>
+                    <div class="content">
+                        <div class="ui items">
+                            {% for ref in professional.references.all %}
+                                <div class="item">
+                                    <div class="content">
+                                        <h4>{{ ref.name }}</h4>
+                                        <div class="description">
+                                            <p></p>
+                                            <p></p>
+                                        </div>
+                                        <div class="extra">
+                                            <i class="green check icon"></i>
+                                            121 Votes
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

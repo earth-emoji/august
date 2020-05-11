@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="ui container">
+    <div class="ui padded grid">
+
+        <div class="row">
+            <div class="sixteen wide column">
+                <h1 class="ui dividing header">Available Jobs</h1>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="sixteen wide column">
+                <div class="ui divided items">
+                    {% for job in jobs %}
+                        <div class="item">
+                            <div class="image">
+                                <img src="{% static 'images/default.png' %}" />
+                            </div>
+                            <div class="content">
+                                <a class="header">{{ job.name }}</a>
+                                <div class="meta">
+                                    <span class="employer">{{ job.creator.company_name }}</span> &middot; &nbsp;
+                                    <span class="category">Category</span>
+                                </div>
+                                <div class="description">
+                                    <p>
+                                        {{ job.description|truncatechars:255 }}
+                                    </p>
+                                </div>
+                                <div class="extra">
+                                    <div class="ui label"><i class="dollar sign icon"></i> 13.00 an hour</div>
+                                    <div class="ui label"><i class="newspaper outline icon"></i> Positions: {{ job.positions_to_fill }}</div>
+                                    <a href="{% url 'jobs:details' job.slug %}" class="tiny ui right floated primary button">
+                                        View
+                                        <i class="right chevron icon"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

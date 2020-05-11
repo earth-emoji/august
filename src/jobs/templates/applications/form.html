@@ -1,0 +1,29 @@
+<div class="ui container">
+    <div class="ui padded grid">
+
+        <div class="row">
+            <div class="sixteen wide column">
+                <h1 class="ui dividing header">Apply</h1>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="sixteen wide column">
+                <form class="ui large container form" method="POST" novalidate>
+                    {% csrf_token %}
+                    <div class="field">
+                        {{ form.interest.errors }}
+                        <label for="{{ form.interest.id_for_label }}">Interest:</label>
+                        {{ form.interest }}
+                    </div>
+                    <div class="field">
+                        {{ form.skills.errors }}
+                        <label for="{{ form.skills.id_for_label }}">Skills:</label>
+                        {{ form.skills }}
+                    </div>
+                    <button class="ui teal button" type="submit">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

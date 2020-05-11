@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="ui container">
+    <div class="ui padded grid">
+
+        <div class="row">
+            <div class="sixteen wide column">
+                <div class="ui positive message" id="results" style="display:none;">
+                    <i class="close icon"></i>
+                    <p id="success-msg"></p>
+                </div>
+                <h1 class="ui dividing header">{{ job.name }}</h1>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="four wide column">
+                <div class="row">
+                    <img src="{% static 'images/default.png' %}" class="ui fluid image">
+                </div>
+
+                <div class="row">
+                    <button type="button" id="apply" style="border-top-left-radius: 0px; border-top-right-radius: 0px" class="fluid ui primary button">
+                        Apply
+                    </button>
+                </div>
+            </div>
+            <div class="twelve wide column">
+                <div class="row">
+                    <div class="sixteen wide column">
+                        <div class="ui label"><i class="dollar sign icon"></i> 13.00 an hour</div>
+                        <div class="ui label"><i class="newspaper outline icon"></i> Positions: {{ job.positions_to_fill }}</div>
+                        <div class="ui divider"></div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="sixteen wide column">
+                        <p>
+                            {{ job.description }}
+                        </p>
+                        <ul>
+                            {% for skill in job.skills %}
+                            <li>{{skill}}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% include 'applications/_apply_modal.html' %}
+{% endblock content %}
+
+{% block javascript %}
+<script>
+$(document).ready(function() {
+    $('.ui.checkbox').checkbox();
+    
+    $('#apply').click(function() {
+        $('.ui.longer.modal').modal('show');
+    });
+
+    $('.message .close')
+        .on('click', function() {
+            $(this)
+                .closest('.message')
+                .transition('fade');
+        });
+
+    $("#app-form").on('submit', function(event){
+        event.preventDefault();
+        
+        $.ajax({
+            data: $(this).serialize(),
+            type: $(this).attr('method'),
+            url: $(this).attr('action'),
+            success: function(response) {
+                 console.log(response);
+                 if(response['success']) {
+                    $("#results").css("display", "block");
+                    $("#success-msg").html(response['message'])
+                    $('.ui.longer.modal').modal('hide');
+                 }
+                 if(response['error']) {
+                 } 
+            },
+            error: function (request, status, error) {
+                 console.log(request.responseText);
+            }
+        });
+    });
+});
+</script>
+{% endblock javascript %}
