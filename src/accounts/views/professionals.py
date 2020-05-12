@@ -7,6 +7,7 @@ from django.views.generic.edit import CreateView
 
 from accounts.forms.professionals import ProfessionalSignUpForm
 from accounts.models import Professional
+from jobs.models import Application
 from users.decorators import professional_required
 from users.models import User
 
@@ -29,4 +30,5 @@ class ProfessionalSignUpView(CreateView):
 @professional_required
 def professional_profile(request, slug):
     professional = get_object_or_404(Professional, slug=slug, user=request.user)
-    return render(request, 'professionals/profile.html', {'professional': professional})
+    applications = Application.objects.filter(applicant=professional, status="Pending")
+    return render(request, 'professionals/profile.html', {'professional': professional, 'applications': applications})
