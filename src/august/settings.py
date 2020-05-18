@@ -54,6 +54,8 @@ INSTALLED_APPS = [
     'jobs',
     'photos',
     'conversations',
+    'classifications',
+    'forums',
 ]
 
 MIDDLEWARE = [

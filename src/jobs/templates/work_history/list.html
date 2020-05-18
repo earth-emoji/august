@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="ui container">
+    <div class="ui padded grid">
+        <div class="row">
+            <div class="sixteen wide column">
+                <h1 class="ui dividing header">{{ professional.user.name }}'s Activity Center</h1>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="four wide column">
+                {% include 'partials/base/_sidenav.html' %}
+            </div>
+            <div class="twelve wide column">
+                <h1 class="ui dividing header">Work History</h1>
+                <div class="ui divided items">
+                    {% for work in professional.work_history.all %}
+                        <div class="item">
+                            <div class="content">
+                                <a class="header">{{ work.job_title }}</a>
+                                <div class="meta">
+                                    <span class="employer">{{ work.employer_name }}</span> &middot; &nbsp;
+                                    <span class="category">Category</span>
+                                </div>
+                                <div class="description">
+                                    <p>
+                                        {{ work.duties|truncatechars:255 }}
+                                    </p>
+                                </div>
+                                <div class="extra">
+                                    <div class="ui label">Start date: {{ work.start_date }}</div>
+                                    <div class="ui label">End date: {{ work.end_date }}</div>
+                                    <a href="#" class="tiny ui right floated primary button">
+                                        View
+                                        <i class="right chevron icon"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

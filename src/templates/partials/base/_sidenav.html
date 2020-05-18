@@ -1,8 +1,8 @@
 <div class="ui fluid vertical pointing menu">
-    <a class="active item">
+    <a href="{% url 'professionals:profile' request.user.professional.slug %}" class="active item">
         Home
     </a>
-    <a class="item">
+    <a href="{% url 'work-history:list' request.user.professional.slug %}" class="item">
         Work History
     </a>
     <a class="item">
