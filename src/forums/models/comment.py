@@ -17,6 +17,13 @@ class Comment(models.Model):
     
     # def get_absolute_url(self):
     #     return reverse("model_detail", kwargs={"pk": self.pk})
+    @property
+    def post_reply_url(self):
+        return reverse("comments-api:reply", kwargs={"slug": self.slug})
+
+    def get_replies(self):
+        """Return replies of a comment."""
+        return Comment.objects.filter(parent=self).order_by('-created_at')
 
     class Meta:
         verbose_name = 'comment'

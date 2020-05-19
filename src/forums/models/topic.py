@@ -1,5 +1,6 @@
 from datetime import datetime
 from django.db import models
+from django.shortcuts import reverse
 from django.utils.text import slugify
 
 from accounts.models import Professional
@@ -16,6 +17,15 @@ class Topic(models.Model):
 
     def __str__(self):
         return self.name
+
+    def get_absolute_url(self):
+        return reverse("topics:thread", kwargs={"slug": self.slug})
+
+    def new_post_url(self):
+        return reverse("topics-api:posts", kwargs={"slug": self.slug})
+
+    def get_posts(self):
+        return self.posts.filter(topic=self)
 
     def save(self, *args, **kwargs):
         today = datetime.today()

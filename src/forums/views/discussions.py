@@ -1,9 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from django.http import JsonResponse
-from django.template.defaultfilters import slugify
 
-from accounts.models import Professional
 from users.decorators import professional_required
 from forums.models import Discussion
 
