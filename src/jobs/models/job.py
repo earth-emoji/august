@@ -1,12 +1,13 @@
-import uuid
+from datetime import datetime
 from django.contrib.postgres.fields import ArrayField
 from django.db import models
+from django.utils.text import slugify
 
 from accounts.models import Employer
 
 class Job(models.Model):
-    slug = models.SlugField(unique=True, default=uuid.uuid1, blank=True)
-    name = models.CharField(max_length=255, blank=True)
+    slug = models.SlugField(max_length=80, unique=True, blank=True)
+    name = models.CharField(max_length=60, blank=True)
     description = models.TextField(blank=True)
     external_url = models.CharField(max_length=255, null=True, blank=True)
     contact_email = models.CharField(max_length=255, null=True, blank=True)
@@ -33,6 +34,12 @@ class Job(models.Model):
     @property
     def apply_url(self):
         return "/jobs/%s/apply/" % (self.slug)
+
+    def save(self, *args, **kwargs):
+        today = datetime.today()
+        title_slugified = slugify(self.name)
+        self.slug = f'{today:%Y%m%d%M%S}-{title_slugified}'
+        super().save(*args, **kwargs)
 
     class Meta:
         verbose_name = 'job'
