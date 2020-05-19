@@ -2,13 +2,13 @@
     <a href="{% url 'professionals:profile' request.user.professional.slug %}" class="active item">
         Home
     </a>
-    <a href="{% url 'work-history:list' request.user.professional.slug %}" class="item">
+    <a href="{% url 'work-history:list' %}" class="item">
         Work History
     </a>
-    <a class="item">
+    <a href="{% url 'education-history:list' %}" class="item">
         Education History
     </a>
-    <a class="item">
+    <a href="{% url 'references:list' %}" class="item">
         References
     </a>
     <a class="item">

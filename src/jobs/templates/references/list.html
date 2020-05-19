@@ -15,25 +15,22 @@
                 {% include 'partials/base/_sidenav.html' %}
             </div>
             <div class="twelve wide column">
-                <h1 class="ui dividing header">Work History</h1>
-                <a href="{% url 'work-history:create' %}" class="ui button teal fluid my-3">Add</a>
+                <h1 class="ui dividing header">References</h1>
+                <a href="{% url 'references:create' %}" class="ui button teal fluid my-3">Add</a>
                 <div class="ui divided items">
-                    {% for work in work_history %}
+                    {% for ref in references %}
                         <div class="item">
                             <div class="content">
-                                <a class="header">{{ work.job_title }}</a>
+                                <a class="header">{{ ref.name }}</a>
                                 <div class="meta">
-                                    <span class="employer">{{ work.employer_name }}</span> &middot; &nbsp;
-                                    <span class="category">Category</span>
+                                    <span class="contact">Contact: {{ ref.contact_info }}</span> &middot; &nbsp;
+                                    <span class="known">Known for {{ ref.known_span }} {{ ref.known_measure }}</span>
                                 </div>
                                 <div class="description">
-                                    <p>
-                                        {{ work.duties|truncatechars:255 }}
-                                    </p>
+                                    <p></p>
                                 </div>
                                 <div class="extra">
-                                    <div class="ui label">Start date: {{ work.start_date }}</div>
-                                    <div class="ui label">End date: {{ work.end_date }}</div>
+                                    <div class="ui label">Relationship: {{ ref.reference_type }}</div>
                                 </div>
                             </div>
                         </div>

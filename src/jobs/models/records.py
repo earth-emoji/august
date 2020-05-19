@@ -40,6 +40,7 @@ class Reference(models.Model):
     contact_info = models.CharField(max_length=60, blank=True)
     reference_type = models.CharField(max_length=15, choices=REFERENCE_TYPE_CHOICES, blank=True)
     professional = models.ForeignKey(Professional, on_delete=models.CASCADE, related_name='references', blank=True)
+    
     def __str__(self):
         return f"{self.professional.user.name} ref {self.name}"
 

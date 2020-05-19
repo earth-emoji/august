@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="ui container">
+    <div class="ui padded grid">
+        <div class="row">
+            <div class="sixteen wide column">
+                <h1 class="ui dividing header">{{ request.user.name }}'s Activity Center</h1>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="four wide column">
+                {% include 'partials/base/_sidenav.html' %}
+            </div>
+            <div class="twelve wide column">
+                <h1 class="ui dividing header">References</h1>
+                <form class="ui large container form" method="POST" novalidate>
+                    {% csrf_token %}
+                    <div class="field">
+                        {{ form.name.errors }}
+                        <label for="{{ form.name.id_for_label }}">Name:</label>
+                        {{ form.name }}
+                    </div>
+                    <div class="field">
+                        {{ form.contact_info.errors }}
+                        <label for="{{ form.contact_info.id_for_label }}">Contact Info:</label>
+                        {{ form.contact_info }}
+                    </div>
+                    <div class="field">
+                        {{ form.reference_type.errors }}
+                        <label for="{{ form.reference_type.id_for_label }}">Relationship:</label>
+                        {{ form.reference_type }}
+                    </div>
+                    <div class="field">
+                        {{ form.known_span.errors }}
+                        {{ form.known_measure.errors }}
+                        <label>Time Known</label>
+                        <div class="fields">
+                            <div class="twelve wide field">
+                                {{ form.known_span }}
+                            </div>
+                            <div class="four wide field">
+                                {{ form.known_measure }}
+                            </div>
+                        </div>
+                    </div>
+                    <button class="ui teal button" type="submit">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

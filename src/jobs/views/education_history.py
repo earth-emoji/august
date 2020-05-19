@@ -5,56 +5,58 @@ from rest_framework.decorators import api_view
 from rest_framework import status
 
 from accounts.models import Professional
-from jobs.forms import WorkHistoryForm
-from jobs.models import WorkHistory
-from jobs.serializers import WorkHistorySerializer
+from jobs.forms import EducationHistoryForm
+from jobs.models import EducationHistory
+from jobs.serializers import EducationHistorySerializer
 from users.decorators import professional_required
 
 @login_required
 @professional_required
-def work_histories(request):
-    template_name = 'work_history/list.html'
+def edu_histories(request):
+    template_name = 'education_history/list.html'
     context = {}
-    work_history = WorkHistory.objects.filter(professional=request.user.professional)
-    context["work_history"] = work_history
+
+    education_history = EducationHistory.objects.filter(professional=request.user.professional)
+
+    context["education_history"] = education_history
     return render(request, template_name, context)
 
 @login_required
 @professional_required
-def work_create(request):
-    template_name = 'work_history/form.html'
+def edu_create(request):
+    template_name = 'education_history/form.html'
     context = {}
     if request.method == 'POST':
-        form = WorkHistoryForm(request.POST or None)
+        form = EducationHistoryForm(request.POST or None)
         if form.is_valid():
             c = form.save(commit=False)
             c.professional = request.user.professional
             c.save()
-            return redirect('work-history:list')
+            return redirect('education-history:list')
     else:
-        form = WorkHistoryForm()
+        form = EducationHistoryForm()
     context['form'] = form
     return render(request, template_name, context)
 
 @login_required
 @professional_required
 @api_view(['GET', 'POST'])
-def work_collection(request):
+def edu_collection(request):
 
     if request.method == 'GET':
-        work_history = WorkHistory.objects.filter(professional=request.user.professional)
-        serializer = WorkHistorySerializer(work_history, many=True)
+        education_history = EducationHistory.objects.filter(professional=request.user.professional)
+        serializer = EducationHistorySerializer(education_history, many=True)
         return JsonResponse(serializer.data, safe=False)
     elif request.method == 'POST':
         data = {
-            'employer_name': request.data.get('employer_name'),
+            'school_name': request.data.get('school_name'),
             'start_date': request.data.get('start_date'),
             'end_date': request.data.get('end_date'),
-            'job_title': request.data.get('job_title'),
-            'duties': request.data.get('duties'),
+            'did_complete': request.data.get('did_complete'),
+            'certificate': request.data.get('certificate'),
             'professional': request.user.professional.pk
         }
-        serializer = WorkHistorySerializer(data=data)
+        serializer = EducationHistorySerializer(data=data)
         if serializer.is_valid():
             serializer.save()
             return JsonResponse(serializer.data, status=status.HTTP_201_CREATED)
