@@ -21,7 +21,7 @@ class ChatConsumer(AsyncConsumer):
             })
 
             # get user and room
-            self.profile = Professional.objects.get(user=user)
+            self.profile = user
             
             self.room_url = self.scope['url_route']['kwargs']['slug']
 
@@ -50,7 +50,7 @@ class ChatConsumer(AsyncConsumer):
             if user.is_authenticated:
                 jsonResponse = {
                     'message': msg,
-                    'username': self.profile.user.name
+                    'username': self.profile.name
                 }
 
                 # save to database

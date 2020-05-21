@@ -2,31 +2,43 @@
 {% load static %}
 
 {% block content %}
-    <h1 class="mt-4 mb-3">Rooms</h1>
+<div class="ui container my-3">
+    <h1 class="ui header mt-4 mb-3">Rooms</h1>
 
-
-    <div id="join_alert" class="alert alert-success alert-dismissible fade" role="alert">
+    <div id="join_alert" class="ui hidden info message">
+        <i class="close icon"></i>
         <span id="join_success"></span>
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
     </div>
-    
-    <ul class="list-unstyled">
+
+    <a href="{% url 'rooms:create' %}" class="ui button fluid primary">Create Room</a>
+
+    <div class="ui large middle aligned divided list">
         {% for room in rooms %}
-            <li class="mb-3 p-4 border bg-light">
-                <a href="{% url 'rooms:details' room.slug %}">{{ room.name }} - hosted by {{ room.host.user.name }}</a>
-                <form method="POST" class="float-right room-list">
-                    <input type="hidden" name="room_{{ room.slug }}" id="room_{{ room.slug }}" value="{{ room.slug }}" />
-                    <button id="join-btn" type="submit" class="btn btn-primary" {% if user.profile in room.members.all  %}disabled{% endif %}>Join <i class="fas fa-sign-in-alt"></i> </button>
-                </form>
-            </li>
+            <div class="item">
+                <div class="right floated content">
+                    <form method="POST" class="float-right room-list">
+                        <input type="hidden" name="room_{{ room.slug }}" id="room_{{ room.slug }}" value="{{ room.slug }}" />
+                        <button id="join-btn" type="submit" class="ui button" {% if user in room.members.all  %}disabled{% endif %}>Join <i class="fas fa-sign-in-alt"></i> </button>
+                    </form>
+                </div>
+                <img class="ui avatar image" src="{{ MEDIA_URL }}{{ room.host.photo }}">
+                <div class="content">
+                    <a href="{% url 'rooms:details' room.slug %}" class="ui header">{{ room.name }} - hosted by {{ room.host.name }}</a>
+                    {{ room.details }}
+                </div>
+            </div>
+            <div class="ui divider"></div>
         {% endfor %}
-    </ul>
+    </div>
+</div>
 {% endblock content %}
 
 {% block javascript %}
 <script>
+$("#join_alert i").click(function(e) {
+    e.preventDefault();
+    $("#join_alert").addClass('hidden').removeClass('visible');
+})
 $('form.room-list').each(function() {
     $(this).on("submit", function(event) {
         event.preventDefault();
@@ -40,7 +52,7 @@ $('form.room-list').each(function() {
             }, 
             success: function(json) {
                 $("#join-btn").attr("disabled", true);
-                $("#join_alert").addClass('show');
+                $("#join_alert").removeClass('hidden').addClass('visible');
                 $("#join_success").html(json.success);
             }
         });

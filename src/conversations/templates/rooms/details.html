@@ -3,22 +3,24 @@
 {% load static %}
 
 {% block content %}
-<div class="my-3">
+<div class="ui container my-3">
     <h1>{{room.name}}</h1>
 
-    <ul id='messages'>
+    <div id='messages'>
         {% for msg in cmessages %}
-            <li>{{ msg.message }} via {{ msg.sender.user.name }}</li>
+            <div class="ui message">
+                {{ msg.message }} via {{ msg.sender.user.name }}
+            </div>
         {% endfor %}
-    </ul>
-
-    <form id="msg-form" method="POST">
+    </div>
+    <div class="ui divider"></div>
+    <form id="msg-form" class="ui large container form" method="POST">
         {% csrf_token %}
-        <div class="form-group">
+        <div class="field">
           <label for="msg">Message</label>
-          <textarea class="form-control" name="msg" id="msg" rows="3"></textarea>
+          <textarea name="msg" id="msg" rows="3"></textarea>
         </div>
-        <button type="submit" class="btn btn-primary">Send</button>
+        <button type="submit" class="ui button primary fluid">Send</button>
     </form>
 </div>
 {% endblock content %}
@@ -64,7 +66,7 @@ socket.onmessage = function(e) {
     // receive data from the server
     var json = JSON.parse(e.data);
 
-    messages.append("<li>" + json.message + " via " + json.username + "</li>");
+    messages.append("<div class='ui message'>" + json.message + " via " + json.username + "</div>");
 }
 
 socket.onclose = function(e) {

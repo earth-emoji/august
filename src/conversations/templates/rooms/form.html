@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="ui container my-3">
+    <h1 class="ui header mt-4 mb-3">Create Room</h1>
+    <form class="ui large container form" method="POST" novalidate>
+        {% csrf_token %}
+        <div class="field">
+            {{ form.name.errors }}
+            <label for="{{ form.name.id_for_label }}">Name:</label>
+            {{ form.name }}
+        </div>
+        <div class="field">
+            {{ form.details.errors }}
+            <label for="{{ form.details.id_for_label }}">Details:</label>
+            {{ form.details }}
+        </div>
+        <div class="field">
+            {{ form.access.errors }}
+            <label for="{{ form.access.id_for_label }}">Access:</label>
+            {{ form.access }}
+        </div>
+        <div class="field">
+            {{ form.category.errors }}
+            <label for="{{ form.category.id_for_label }}">Category:</label>
+            {{ form.category }}
+        </div>
+        <button class="ui teal button" type="submit">Submit</button>
+    </form>
+</div>
+{% endblock %}
