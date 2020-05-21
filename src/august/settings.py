@@ -34,7 +34,7 @@ MESSAGE_TAGS = {
     messages.ERROR: 'negative',
 }
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'channels',
     'rest_framework',
     'pages',
     'error_pages',
@@ -53,9 +54,9 @@ INSTALLED_APPS = [
     'accounts',
     'jobs',
     'photos',
-    'conversations',
     'classifications',
-    'forums',
+    'conversations',
+    # 'forums',
 ]
 
 MIDDLEWARE = [
@@ -69,6 +70,7 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'august.urls'
+ASGI_APPLICATION = 'august.routing.application'
 
 TEMPLATES = [
     {
@@ -165,6 +167,11 @@ LOGIN_REDIRECT_URL = 'home'
 
 LOGOUT_REDIRECT_URL = 'home'
 
-REST_FRAMEWORK = {
-    'DEFAULT_FILTER_BACKENDS': ('rest_framework.filters.DjangoFilterBackend',)
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [("localhost", 6379)],
+        },
+    },
 }

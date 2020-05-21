@@ -24,5 +24,5 @@ urlpatterns = [
     path('', include('error_pages.urls')),
     path('', include('accounts.urls')),
     path('', include('jobs.urls')),
-    path('', include('forums.urls')),
+    path('', include('conversations.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
