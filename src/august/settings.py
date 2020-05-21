@@ -56,7 +56,7 @@ INSTALLED_APPS = [
     'photos',
     'classifications',
     'conversations',
-    # 'forums',
+    'documents',
 ]
 
 MIDDLEWARE = [

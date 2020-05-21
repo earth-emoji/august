@@ -4,24 +4,43 @@
 
 {% block content %}
 <div class="ui container my-3">
-    <h1>{{room.name}}</h1>
+    <div class="ui grid">
 
-    <div id='messages'>
-        {% for msg in cmessages %}
-            <div class="ui message">
-                {{ msg.message }} via {{ msg.sender.user.name }}
+        <div class="row">
+            <div class="sixteen wide column">
+                <h1>{{room.name}}</h1>
+
+                <div id='messages'>
+                    {% for msg in cmessages %}
+                        <div class="ui message">
+                            {{ msg.message }} via {{ msg.sender.user.name }}
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="ui divider"></div>
             </div>
-        {% endfor %}
-    </div>
-    <div class="ui divider"></div>
-    <form id="msg-form" class="ui large container form" method="POST">
-        {% csrf_token %}
-        <div class="field">
-          <label for="msg">Message</label>
-          <textarea name="msg" id="msg" rows="3"></textarea>
         </div>
-        <button type="submit" class="ui button primary fluid">Send</button>
-    </form>
+
+        <div class="row">
+            <div class="one wide column">
+                <div class="ui vertical small basic icon buttons">
+                    <button class="ui button"><i class="paperclip icon"></i></button>
+                    <button class="ui button"><i class="images icon"></i></button>
+                </div>
+            </div>
+            <div class="fifteen wide column">
+                <form id="msg-form" class="ui large container form" method="POST">
+                    {% csrf_token %}
+                    <div class="field">
+                        <label for="msg">Message</label>
+                        <textarea name="msg" id="msg" rows="3"></textarea>
+                    </div>
+                    <button type="submit" class="ui button primary fluid">Send</button>
+                </form>
+            </div>
+        </div>
+
+    </div>
 </div>
 {% endblock content %}
 
