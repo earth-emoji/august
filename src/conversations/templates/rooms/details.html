@@ -22,18 +22,12 @@
         </div>
 
         <div class="row">
-            <div class="one wide column">
-                <div class="ui vertical small basic icon buttons">
-                    <button class="ui button"><i class="paperclip icon"></i></button>
-                    <button class="ui button"><i class="images icon"></i></button>
-                </div>
-            </div>
-            <div class="fifteen wide column">
+            <div class="sixteen wide column">
                 <form id="msg-form" class="ui large container form" method="POST">
                     {% csrf_token %}
                     <div class="field">
-                        <label for="msg">Message</label>
-                        <textarea name="msg" id="msg" rows="3"></textarea>
+                        {{ form.content }}
+                        {% comment %} <textarea name="msg" id="msg" rows="7"></textarea> {% endcomment %}
                     </div>
                     <button type="submit" class="ui button primary fluid">Send</button>
                 </form>
@@ -45,7 +39,6 @@
 {% endblock content %}
 
 {% block javascript %}
-<script src="{% static 'lib/websocket/reconnecting-websocket.min.js' %}"></script>
 <script src="{% static 'js/rooms.js' %}"></script>
 
 

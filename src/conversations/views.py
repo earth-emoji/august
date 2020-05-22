@@ -5,7 +5,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 
-from conversations.forms import RoomForm
+from conversations.forms import RoomForm, MessageForm
 from conversations.models import Room, Message
 from conversations.serializers import RoomSerializer
 
@@ -38,6 +38,8 @@ def room(request, slug):
 
     # check if user is in room
     if room.host == profile or room.members.filter(pk=profile.id).exists():
+        form = MessageForm()
+        data["form"] = form
         data['room'] = room
         data['cmessages'] = Message.objects.filter(room=room)
         return render(request, template_name, data)
