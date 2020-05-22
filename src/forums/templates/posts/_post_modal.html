@@ -1,13 +1,12 @@
 <div class="ui longer modal">
   <div class="header">Post</div>
   <div class="scrolling content">
-    <form id="post-form" class="ui large container form" method="POST" action="{{ topic.new_post_url }}">
+    <form id="post-form" class="ui container form" method="POST" action="{{ topic.new_post_url }}" enctype="multipart/form-data">
         {% csrf_token %}
+        {{ form.media }}
         <div class="field">
-            <label for="content">Content:</label>
-            <textarea id="content" name="content"></textarea>
+        {{ form.content }}
         </div>
-        
         <div class="ui divider"></div>
         <button class="ui teal button" type="submit">Submit</button>
     </form>

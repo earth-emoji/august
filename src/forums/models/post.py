@@ -2,13 +2,14 @@ import uuid
 from datetime import datetime
 from django.db import models
 from django.shortcuts import reverse
+from tinymce import HTMLField
 
 from accounts.models import Professional
 from forums.models import Topic
 
 class Post(models.Model):
     slug = models.SlugField(unique=True, default=uuid.uuid1, blank=True)
-    content = models.TextField(blank=True)
+    content = HTMLField('Content', blank=True)
     author = models.ForeignKey(Professional, on_delete=models.ForeignKey, related_name='posts', blank=True)
     topic = models.ForeignKey(Topic, on_delete=models.ForeignKey, related_name='posts', blank=True)
     created_at = models.DateTimeField(auto_now_add=True)

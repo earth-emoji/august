@@ -17,13 +17,16 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+from filebrowser.sites import site
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('mdeditor/', include('mdeditor.urls')),
+    path('admin/filebrowser/', site.urls),
+    path('tinymce/', include('tinymce.urls')),
     path('', include('pages.urls')),
     path('', include('error_pages.urls')),
     path('', include('accounts.urls')),
     path('', include('jobs.urls')),
+    path('', include('forums.urls')),
     path('', include('conversations.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

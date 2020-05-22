@@ -25,5 +25,16 @@ $( document ).ready(function() {
         create(url, data, success);
     });
 
+    $('.context.example .ui.sidebar').sidebar({
+        context: $('.context.example .bottom.segment')
+    })
+    .sidebar('attach events', '.context.example .menu .item');
+    
+    var loc = window.location;
+    var ws = "ws://";
+    if (loc.protocol === "https:") {
+        ws = "wss://";
+    }
+
 
 });

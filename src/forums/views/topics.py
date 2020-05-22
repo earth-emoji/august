@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 
 from users.decorators import professional_required
 from forums.models import Discussion, Topic
-from forums.forms import TopicForm
+from forums.forms import TopicForm, PostForm
 
 @login_required
 @professional_required
@@ -48,6 +48,9 @@ def topic_thread(request, slug):
     if topic is None:
         return redirect('not-found')
 
+    form = PostForm()
+
     context['topic'] = topic
+    context['form'] = form
 
     return render(request, template_name, context)

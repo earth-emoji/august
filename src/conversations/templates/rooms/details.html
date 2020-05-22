@@ -1,93 +1,123 @@
-{% extends 'base.html' %}
-
-{% load static %}
+{% extends 'base.html' %} 
+{% load static %} 
 
 {% block content %}
 <div class="ui container my-3">
     <div class="ui grid">
-
         <div class="row">
             <div class="sixteen wide column">
                 <h1>{{room.name}}</h1>
-
-                <div id='messages'>
-                    {% for msg in cmessages %}
-                        <div class="ui message">
-                            {{ msg.message }} via {{ msg.sender.user.name }}
-                        </div>
-                    {% endfor %}
-                </div>
-                <div class="ui divider"></div>
             </div>
         </div>
-
         <div class="row">
-            <div class="sixteen wide column">
-                <form id="msg-form" class="ui large container form" method="POST">
-                    {% csrf_token %}
-                    <div class="field">
-                        {{ form.content }}
-                        {% comment %} <textarea name="msg" id="msg" rows="7"></textarea> {% endcomment %}
+            <div class="three wide column">
+                <div class="ui top demo attached segment">
+                    <div class="ui header">Top</div>
+                </div>
+                <div class="ui attached segment" style="overflow: auto; max-height: 200px;">
+                    <div class="ui header my-5">Content</div>
+                </div>
+                <div class="ui bottom demo attached segment">
+                    <div class="ui header">Bottom</div>
+                </div>
+            </div>
+
+            <div class="ten wide column">
+                <div class="ui top demo attached segment">
+                    <img class="ui avatar image" src="{{ MEDIA_URL }}{{ request.user.photo }}"> {{ request.user.name }}
+                </div>
+                <div
+                    class="ui attached segment"
+                    style="overflow: auto; max-height: 200px;">
+                    <div id="messages">
+                        {% for msg in cmessages %}
+                        <div class="ui message">
+                            {{ msg.message }} via {{ msg.sender.name }}
+                        </div>
+                        {% endfor %}
                     </div>
-                    <button type="submit" class="ui button primary fluid">Send</button>
-                </form>
+                </div>
+                <div class="ui bottom demo attached segment">
+                    <form id="msg-form" class="ui large container form" method="POST">
+                        {% csrf_token %}
+                        <div class="ui fluid action input">
+                            <input type="text" name="msg" id="msg" placeholder="Write on...">
+                            <button type="submit" class="ui teal button">Send</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="three wide column">
+                <div class="ui top demo attached segment">
+                    <div class="ui header">Top</div>
+                </div>
+                <div class="ui attached segment" style="overflow: auto; max-height: 200px;">
+                    <div class="ui header my-5">Content</div>
+                </div>
+                <div class="ui bottom demo attached segment">
+                    <div class="ui header">Bottom</div>
+                </div>
             </div>
         </div>
-
     </div>
 </div>
-{% endblock content %}
+{% endblock content %} 
 
 {% block javascript %}
 <script src="{% static 'js/rooms.js' %}"></script>
 
-
 <script>
-var loc = window.location;
-var ws = 'ws://';
-if (loc.protocol === 'https:') {
-    ws = 'wss://';
-}
+    var loc = window.location;
+    var ws = 'ws://';
+    if (loc.protocol === 'https:') {
+        ws = 'wss://';
+    }
 
-var endpoint = ws + loc.host + loc.pathname;
-//var socket = new ReconnectingWebSocket(endpoint);
-var socket = new WebSocket(endpoint);
+    var endpoint = ws + loc.host + loc.pathname;
+    //var socket = new ReconnectingWebSocket(endpoint);
+    var socket = new WebSocket(endpoint);
 
-var formData = $("#msg-form");
-var msgInput = $("#msg");
-var messages = $('#messages');
+    var formData = $("#msg-form");
+    var msgInput = $("#msg");
+    var messages = $("#messages");
 
-socket.onopen = function(e) {
-    console.log("open", e);
+    socket.onopen = function (e) {
+        console.log("open", e);
 
-    // send form data
-    formData.submit(function(evt) {
-        evt.preventDefault();
-        var msgText = msgInput.val();
-        var data = {
-            'message': msgText
-        }
-        socket.send(JSON.stringify(data));
-        formData[0].reset();
-    });
-}
+        // send form data
+        formData.submit(function (evt) {
+            evt.preventDefault();
+            var msgText = msgInput.val();
+            var data = {
+                message: msgText,
+            };
+            socket.send(JSON.stringify(data));
+            formData[0].reset();
+        });
+    };
 
-socket.onmessage = function(e) {
-    console.log("message", e);
+    socket.onmessage = function (e) {
+        console.log("message", e);
 
-    // receive data from the server
-    var json = JSON.parse(e.data);
+        // receive data from the server
+        var json = JSON.parse(e.data);
 
-    messages.append("<div class='ui message'>" + json.message + " via " + json.username + "</div>");
-}
+        messages.append(
+            "<div class='ui message'>" +
+                json.message +
+                " via " +
+                json.username +
+                "</div>"
+        );
+    };
 
-socket.onclose = function(e) {
-    console.log("close", e);
-}
+    socket.onclose = function (e) {
+        console.log("close", e);
+    };
 
-socket.onerror = function(e) {
-    console.log("error", e);
-}
-
+    socket.onerror = function (e) {
+        console.log("error", e);
+    };
 </script>
 {% endblock javascript %}

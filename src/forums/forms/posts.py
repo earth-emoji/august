@@ -1,10 +1,12 @@
 from django import forms
-
+from tinymce import TinyMCE
 from forums.models import Post
 
 class PostForm(forms.ModelForm):
     content = forms.CharField(
-        strip=True, widget=forms.Textarea(attrs={'class ': ''}))
+        widget=TinyMCE(attrs={
+            'required': True,
+        }))
 
     class Meta:
         model = Post

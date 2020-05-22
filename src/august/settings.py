@@ -46,9 +46,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'filebrowser',
     'channels',
     'rest_framework',
-    'mdeditor',
+    'tinymce',
     'pages',
     'error_pages',
     'users',
@@ -56,6 +57,7 @@ INSTALLED_APPS = [
     'jobs',
     'photos',
     'classifications',
+    'forums',
     'conversations',
     'documents',
 ]
@@ -177,31 +179,38 @@ CHANNEL_LAYERS = {
     },
 }
 
-MDEDITOR_CONFIGS = {
-    'default':{
-        'language': 'en',
-        'width': '100% ',  # Custom edit box width
-        'heigth': 500,  # Custom edit box height
-        'toolbar': ["undo", "redo", "|",
-                    "bold", "del", "italic", "quote", "ucwords", "uppercase", "lowercase", "|",
-                    "h1", "h2", "h3", "|",
-                    "list-ul", "list-ol", "hr", "|",
-                    "link", "reference-link", "image", "datetime", "|",
-                    "emoji", "html-entities", "|",
-                    "||", "watch", "preview", "fullscreen"],  # custom edit box toolbar 
-        'upload_image_formats': ["jpg", "jpeg", "gif", "png", "bmp", "webp"],  # image upload format type
-        'image_folder': 'editor',  # image save the folder name
-        'theme': 'default',  # edit box theme, dark / default
-        'preview_theme': 'default',  # Preview area theme, dark / default
-        'editor_theme': 'default',  # edit area theme, pastel-on-dark / default
-        'toolbar_autofixed': True,  # Whether the toolbar capitals
-        'search_replace': True,  # Whether to open the search for replacement
-        'emoji': True,  # whether to open the expression function
-        'tex': False,  # whether to open the tex chart function
-        'flow_chart': False,  # whether to open the flow chart function
-        'sequence': False, # Whether to open the sequence diagram function
-        'watch': False,  # Live preview
-        'lineWrapping': False,  # lineWrapping
-        'lineNumbers': False  # lineNumbers
-    }
+TINYMCE_DEFAULT_CONFIG = {
+    'height':
+    220,
+    'width':
+    850,
+    'cleanup_on_startup':
+    True,
+    'custom_undo_redo_levels':
+    20,
+    'selector':
+    'textarea',
+    'theme':
+    'modern',
+    'plugins':
+    '''
+            textcolor save link image media preview codesample contextmenu
+            table code lists fullscreen  insertdatetime  nonbreaking
+            contextmenu directionality searchreplace wordcount visualblocks
+            visualchars code fullscreen autolink lists  charmap print  hr
+            anchor pagebreak
+            ''',
+    'toolbar1':
+    '''
+            fullscreen preview charmap hr bold italic underline | fontselect,
+            fontsizeselect | forecolor backcolor | bullist numlist |
+            | link image media |
+            ''',
+    'toolbar2': '''''',
+    'contextmenu':
+    'formats | link image',
+    'menubar':
+    True,
+    'statusbar':
+    True,
 }
