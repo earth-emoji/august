@@ -7,5 +7,4 @@ psycopg2==2.8.5
 psycopg2-binary==2.8.5
 pylint==2.5.0
 pylint-django==2.0.15
-django-filebrowser-no-grappelli==3.8.0
-django-tinymce4-lite==1.8.0
+django-summernote==0.8.11.6

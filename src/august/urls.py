@@ -17,12 +17,10 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
-from filebrowser.sites import site
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('admin/filebrowser/', site.urls),
-    path('tinymce/', include('tinymce.urls')),
+    path('summernote/', include('django_summernote.urls')),
     path('', include('pages.urls')),
     path('', include('error_pages.urls')),
     path('', include('accounts.urls')),

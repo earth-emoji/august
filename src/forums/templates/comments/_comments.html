@@ -1,13 +1,10 @@
-<div id="comments" class="ui comments">
+<div id="comments" class="ui comments my-3">
     {% for comment in post.get_comments %}
-    {% if not comment.parent%}
-        <div class="ui divider"></div>
+    {% if not comment.parent %}
         
-        <div class="comment">
+        <div class="comment my-3">
             <a class="avatar">
-                <img
-                    src="{{ MEDIA_URL }}{{ comment.author.user.photo }}"
-                />
+                <img src="{{ MEDIA_URL }}{{ comment.author.user.photo }}" />
             </a>
             <div class="content">
                 <a class="author">
@@ -25,7 +22,7 @@
                 <form id="{{ comment.slug }}" class="ui fluid reply form mt-3 reply-form" method="POST" action="{{ comment.post_reply_url }}">
                     {% csrf_token %}
                     <div class="field">
-                        <textarea name="reply-content"></textarea>
+                        <input type="text" name="reply-content" />
                     </div>
                     <button type="submit" class="ui teal labeled submit icon button">
                         <i class="icon edit"></i> Add Reply
@@ -34,8 +31,8 @@
             </div>
             <div id="r_{{comment.slug}}" class="comments">
                 {% for reply in comment.get_replies %}
-                <div class="ui divider"></div>
-                <div class="comment">
+                
+                <div class="comment my-3">
                     <a class="avatar">
                         <img
                             src="{{ MEDIA_URL }}{{ reply.author.user.photo }}"
@@ -46,9 +43,7 @@
                             >{{ reply.author.user.name }}</a
                         >
                         <div class="metadata">
-                            <span class="date"
-                                >Created at: {{ reply.created_at }}</span
-                            >
+                            <span class="date">Created at: {{ reply.created_at }}</span>
                         </div>
                         <div class="text">
                             <p>{{ reply.content }}</p>

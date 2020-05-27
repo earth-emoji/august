@@ -1,6 +1,10 @@
 {% extends 'base.html' %}
 {% load static %}
 
+{% block extra %}
+    {{ form.media }}
+{% endblock extra %}
+
 {% block content %}
 <div class="ui container">
     <div class="ui padded grid">
@@ -36,12 +40,12 @@
                                 <div class="header"><img class="ui avatar image" src="{{ MEDIA_URL }}{{ post.author.user.photo }}"> {{ post.author.user.name }}</div>
                                 <div class="meta">{{ post.timelapse }}</div>
                                 <div class="description">
-                                    {{ post.content }}
+                                    {{ post.content|safe }}
                                 </div>
-                                <form id="comment-form" class="ui reply form mt-3" method="POST" action="{{ post.post_comment_url }}">
+                                <form id="comment-form" class="ui reply form py-3" method="POST" action="{{ post.post_comment_url }}">
                                     {% csrf_token %}
                                     <div class="field">
-                                        <textarea id="c-content" name="c-content" required></textarea>
+                                        <input id="c-content" name="c-content" required />
                                     </div>
                                     <button type="submit" class="ui blue labeled submit icon button">
                                         <i class="icon edit"></i> Add Reply
