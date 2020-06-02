@@ -10,7 +10,7 @@
         <span id="join_success"></span>
     </div>
 
-    <a href="{% url 'rooms:create' %}" class="ui button fluid primary">Create Room</a>
+    <a href="{% url 'rooms:create' %}" class="ui button fluid studio">Create Room</a>
 
     <div class="ui large middle aligned divided list">
         {% for room in rooms %}
@@ -23,7 +23,7 @@
                 </div>
                 <img class="ui avatar image" src="{{ MEDIA_URL }}{{ room.host.photo }}">
                 <div class="content">
-                    <a href="{% url 'rooms:details' room.slug %}" class="ui header">{{ room.name }} - hosted by {{ room.host.name }}</a>
+                    <a href="{% url 'rooms:details' room.slug %}" class="ui header viking-txt">{{ room.name }} - hosted by {{ room.host.name }}</a>
                     {{ room.details }}
                 </div>
             </div>

@@ -7,15 +7,15 @@ from users.models import User
 
 class ProfessionalSignUpForm(UserCreationForm):
     email = forms.CharField(min_length=1, max_length=60, widget=forms.EmailInput(
-        attrs={'class': 'form-control rounded-pill mb-3', 'placeholder': 'Email'}))
+        attrs={'class': '', 'placeholder': 'Email'}))
     name = forms.CharField(min_length=1, max_length=60, widget=forms.TextInput(
-        attrs={'class': 'form-control rounded-pill mb-3', 'placeholder': 'Name'}))
+        attrs={'class': '', 'placeholder': 'Name'}))
     photo = forms.ImageField(widget=forms.FileInput(
-        attrs={'class': 'inputfile inputfile-custom'}))
+        attrs={'class': ''}))
     password1 = forms.CharField(min_length=1, max_length=60, widget=forms.PasswordInput(
-        attrs={'class': 'form-control rounded-pill mb-3', 'placeholder': 'Password'}))
+        attrs={'class': '', 'placeholder': 'Password'}))
     password2 = forms.CharField(min_length=1, max_length=60, widget=forms.PasswordInput(
-        attrs={'class': 'form-control rounded-pill mb-3', 'placeholder': 'Confirm Password'}))
+        attrs={'class': '', 'placeholder': 'Confirm Password'}))
 
     class Meta(UserCreationForm):
         model = User

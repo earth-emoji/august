@@ -3,7 +3,7 @@
 {% block content %}
 <div class="ui padded grid">
     <div class="row">
-        <a class="fluid ui teal button" href="{% url 'jobs:create' %}">Create</a>
+        <a class="fluid ui studio button" href="{% url 'jobs:create' %}">Create</a>
     </div>
 
     <div class="row">
@@ -22,7 +22,7 @@
                         <td>{{ job.name }}</td>
                         <td>{{ job.positions_to_fill }}</td>
                         <td>{{ job.applicants.count }}</td>
-                        <td><a href="{% url 'jobs:employer-view' job.slug %}">View</a> | Delete</td>
+                        <td><a class="studio-txt" href="{% url 'jobs:employer-view' job.slug %}">View</a> | Delete</td>
                     </tr>
                 {% endfor %}
             </tbody>
