@@ -1,5 +1,5 @@
 Django==2.2.12
-djangorestframework==3.11.0
+djangorestframework==3.11.2
 channels==2.4.0
 channels-redis==2.4.1
 Pillow==7.1.2
